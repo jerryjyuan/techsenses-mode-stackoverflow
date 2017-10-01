@@ -3,15 +3,15 @@
 ##Notes:
 
 1. Pros:
-	> Knowledge Bases:	Complete Set of Knowledge Bases
-	> Concepts:		Gain clear concepts or unknown concepts - and know why + remove confusions and guesses
-	> Inside-Out:		Know inside-out: good for varied scenarios of usage + new ideas + inventions
-	> New Versions:	Catch up with newer versions and ever-evolving changes
+	(1) Knowledge Bases:	Complete Set of Knowledge Bases
+	(2) Concepts:		Gain clear concepts or unknown concepts - and know why + remove confusions and guesses
+	(3) Inside-Out:		Know inside-out: good for varied scenarios of usage + new ideas + inventions
+	(4) New Versions:	Catch up with newer versions and ever-evolving changes
 
 2. How to reuse "Pure" Technical Contents - without violation of Company Trademarks/Copyrights/Brands/Privacies/Secrets?
-	> Method 1: Make sure these contents are JUST the research from online resources - technical scenarios - nothing about company contents
+	(1) Method 1: Make sure these contents are JUST the research from online resources - technical scenarios - nothing about company contents
 			  These contents are indeed open source / online technical resources
-	> Method 2: Use: github - this might be better
+	(2) Method 2: Use: github - this might be better
 					  Why?
 					  	Open source world - use: public repositories - so it belongs to open source world
 					  	Copy Paste technical contents- much better than sending emails or files
