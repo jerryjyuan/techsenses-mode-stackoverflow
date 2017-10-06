@@ -1,0 +1,16 @@
+Groovy:
+
+(1) App Types:
+		GR8Conf
+	===>Type 1: G3: Groovy and Grails MVC + Gradle
+				===>Apache Groovy/Grails/Gradle technologies
+				https://g3summit.com/conference/austin/2017/11/home
+	===>Type 2: Groovy and Grails MVC
+	===>Type 3: Standalone + Scripts + Groovy Script Engine
+				Scripting
+				Meta Programming
+					https://objectcomputing.com/index.php/training/register/offering/109/
+	===>Type 4: Groovy + Spring
+	===>Type 5: Integrations:
+				Frontend: UI
+				Test Frameworks
