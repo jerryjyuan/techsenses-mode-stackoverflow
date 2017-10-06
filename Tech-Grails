@@ -1,0 +1,58 @@
+#Technical Summaries - Gradle:
+
+##Notes:
+
+1. IDE - Gradle Plugins:
+	(1) Buildship
+	(2) Gradle(STS)
+	(3) Enider Gradle
+	(4) 
+
+	Eclipse Mars 2:
+		Gradle running slow - TBD
+
+	Eclipse Oxygen:
+		Gradle Running OK
+
+
+5. Gradle Tests:
+	
+	These can be unit tests, integration tests, acceptance tests, or any combination that is useful to you.
+	
+	(1) Points:
+		> Gradle Tests: config
+		> Gradle Tests: Filtering
+
+			Some examples of using the command line option:
+				gradle test --tests org.gradle.SomeTest.someSpecificFeature
+				gradle test --tests \*SomeTest.someSpecificFeature
+				gradle test --tests \*SomeSpecificTest
+				gradle test --tests \*SomeSpecificTestSuite
+				gradle test --tests all.in.specific.package\*
+				gradle test --tests \*IntegTest
+				gradle test --tests \*IntegTest\*ui\*
+				gradle test --tests "com.example.MyTestSuite"
+				gradle test --tests "com.example.ParameterizedTest"
+				gradle test --tests "*ParameterizedTest.foo*"
+				gradle test --tests "*ParameterizedTest.*[2]"
+				gradle someTestTask --tests \*UiTest someOtherTestTask --tests \*WebTest\*ui
+
+				gradle -Dtest.single=ThisUniquelyNamedTest test
+				gradle -Dtest.single=a/b/ test
+				gradle -DintegTest.single=\*IntegrationTest integTest
+				gradle -Dtest.single=:proj1:test:Customer build
+				gradle -DintegTest.single=c/d/ :proj1:integTest
+		
+	(2) Commands:
+
+		.\gradlew.bat test -Dgrails.env=development
+			C:\Users\C844431\git\RevWorkflowDataService\rev-workflow-dataservice-integration-test>.\gradlew.bat test -Dgrails.env=development
+		.\gradlew.bat -Dtest.single=PingTest test -Dgrails.env=development
+			Command Line overrides test config/filters
+		.\gradlew.bat test -Dgrails.env=development
+		.\gradlew.bat test -Dgrails.env=development
+		.\gradlew.bat test -Dgrails.env=development
+		
+		
+		
+		
