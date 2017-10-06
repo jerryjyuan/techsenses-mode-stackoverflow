@@ -1,0 +1,406 @@
+
+									<Angular JS>
+
+================================================================
+Angular JS 2:
+
+(1) Jerry:
+	1) Learned:	2015-2016: 2 times - learned and reviewed Angular JS 1.x: ~1-2 months
+	2) JAF:		Just Another Framework - another JavaScript Framework
+				- Similar to: Angular JS vs. jQuery ~== Hibernate vs. SpringFramework
+							  React JS is like: myBatis
+							  ===>So if you know Spring Framework, how tough it is for Hibernate?
+	3) Angular JS 2: + Angular 4, ...
+				- JAS:        Just another Struts: Struts v2.x vs. Struts v1.x
+
+(2) 	
+	
+================================================================
+Challenges:
+
+(1) Application Design
+
+(2) Core Items:
+	1) How to run?
+		===>npm start:		===>ng serve
+							All the main example apps: use: "ng serve"
+		===>Gradle Plugin:	===>To run?
+							1) Spring Guides: Use Gradle to run Spring Boot apps + Angular JS 1.x as some UI functions
+		===>Challenge 1:	Build up processes:
+								For our Workflow App:
+								===>We use Spring Boot + Angular JS 2
+								Then how could we combine: Gradle + Spring Boot + Angular JS npm serve together?
+		===>
+
+(3) Several Starting Points:
+		Difficult Level starting 1) - 9):	with 9) is the most difficult
+	1) Starting Point 1:	===>Explore various apps from Github and simulate/enhance/invent some design and architectures/modules
+	2) Starting Point 2:	===>Start from Angular JS reference documentations as bible and vamp up the project design and impl
+	3) Strating Point 3:	===>Utilize Angular JS's brothers like React JS and Java
+		
+	8) Starting from NodeJS and NPM and Angular JS source code and become a super expert in JS
+	9) Starting Point 9: 	===>Maybe dating someone to help with? - date who? - someone in San Diego like Holly - does she know about this?
+
+================================================================
+================================================================
+================================================================
+(1) Topic 1: Spring Guide
+	How does they run: just recall and refresh!
+	
+	Jerry has reviewed the following 3 apps! - but they are Angular JS 1.x
+		===>But the Angular JS is only used as UI side - not like component in Angular JS 2.x
+	
+	https://spring.io/guides/tutorials/spring-security-and-angular-js/
+	https://spring.io/guides/tutorials/react-and-spring-data-rest/
+	https://spring.io/guides/tutorials/spring-boot-oauth2/ - social media plugins
+	
+	Spring Security and Angular JS
+		A tutorial on how to use Spring Security with a single page application with various backend architectures, ranging from a simple single server to an API gateway with OAuth2 authentication.
+	React.js and Spring Data REST
+		A tutorial based on the 5-part blog series by Greg Turnquist
+	Spring Boot and OAuth2
+		A tutorial on "social" login and single sign on with Facebook and Github
+
+================================================================
+(2) Topic 2: 
+
+	Angular HTML5 single page application and a Spring Boot application
+	serve the complete Angular app from Spring Boot
+	===>run NPM from Gradle
+	===>integrate the Gradle frontend build in the main build
+	===>support HTML5 mode in the ResourceHandler of Spring Boot
+	
+	===>Gradle is the driver
+		Thinking patterns:
+		1) Gradle can include submodules + various plugins!
+		2) Missing part is: node plugin for gradle - and here it is
+		3) Another challenge is: marry with Spring Boot
+			===>serving this Angular HTML5 application from Spring Boot is that the Spring Boot ResourceHandler 
+				cannot find these resources, since the real resources is the index.html with the JavaScript files. 
+				With the next code snippet we instruct Spring Boot to look for the index.html as well.
+				WHY?
+					===>Because Angular JS 2 enables elements inside index.html
+					
+	1) Step 1: Run Gradle -> build frontend code
+		gradle-node-plugin
+			node will be downloaded
+			npm install will be executed
+			npm run build will be executed
+	2) Step 2: To run the frontend submodule integrated from our root project
+		Utilize Gradle build features: settings.gradle
+	3) Step 3: Support Angular HTML5 mode
+		http://stackoverflow.com/questions/24837715/spring-boot-with-angularjs-html5mode
+	
+  
+###What about Angular JS?
+
+1. jQuery:
+	referred by link in html
+2. extJS + many other JS frameworks:
+	Referred in similar way to jQuery
+3. Bootstrap JS Framework:
+	Utilization of LESS/SASS compiling, etc.
+4. ReactJS:
+	Component Based JS framework
+	- Compiling/Generating Processes:
+	  Generate .js file(s) that are being referred inside index.html
+	  There is one final compiled / combined JS file being used inside index.html
+5. Angular JS:
+	- A powerful JS framework - similar to Spring Framework in Java
+	- Component Based JS framework
+	- Not simply referred inside index.html like jQuery JS library files
+	- How to understand the internal processes like "React JS"?
+		> Starting from ng commands: "ng build/test/serve"
+		> Similarities:
+			Component based
+			Compiling processes
+		> Disparities:
+			I am not seeing one final JS file being being used inside index.html
+			> ng build:	The build artifacts will be stored in the dist/ directory
+		To be found out
+	- How to understand the module design - similar to PHP and Java?
+		These modules could be similar to something similar to PHP frameworks - Module Design
+		> PHP modules - bootstrapping / config / routes / ...
+		> Java modules - MVC / ...
+						 controllers, directives,initializers, filters,services and factories right from your command line.
+		> Test modules:
+			karma unit tests - built in
+
+##Angular JS Applications:
+
+###Types:
+	(1) Type 1: Standalone Angular JS App - UI
+				Method 1: Angular JS 2
+				Method 2: Angular JS 2 + Angular JS CLI
+							Angular cli is a command line interface to scaffold and build angular apps using nodejs style (commonJs) modules.
+							ng new <project>
+								Above command will create a new project for you by installing required dependencies using bower and npm.
+				Method 3: Grails + AngularJS Profile
+						> The AngularJS Profile
+							grails create-app my-api --profile angularjs
+							grails create-ng-controller foo
+							> Create an AngularJS frontend module
+						> Demo Examples: Grails Reference Documentations
+									   http://docs.grails.org/latest/guide/REST.html#angularJsProfile
+	(2) Type 2: Angular JS App + Inegration - Mid-Tier/Backend
+				Method 1: NPM + package.json + angular JS 2
+						> 
+				Method 2: Grails + AngularJS Profile
+						> Demo Examples: Grails Reference Documentations
+									   http://docs.grails.org/latest/guide/REST.html#angularProfile
+						> The Angular Profile
+							grails create-app my-app --profile angular
+								The Angular profile relies on the Angular CLI to manage the client side application. 
+								The server side application is the same as an application created with the rest-api profile.
+							./gradlew server:bootRun
+							./gradlew client:bootRun
+							./gradlew bootRun --parallel
+							You can execute the test and integrationTest tasks on each of the sub-projects the same as you would bootRun
+							./gradlew test
+								The test task will execute unit tests with Karma and Jasmine
+							./gradlew integrationTest
+								The integrationTest task will execute e2e tests with Protractor
+							> Create an Angular Application
+						> Features:
+							Grails
+							Gradle
+							Test Frameworks
+							Spring Boot + Spring
+				Method 3: Spring + Angular JS + OAuth
+						  > Demo Examples:
+							https://spring.io/guides/tutorials/spring-security-and-angular-js/
+							https://spring.io/guides/tutorials/spring-boot-oauth2/
+
+							
+###Common Design Architectures:
+
+1. Technology Flows
+
+	Build
+		Gradle		npm plugin
+	Modules
+		Multiple Modules - Tiers - via Gradle Projects
+	Technologies
+		Grails
+		Spring / Spring Boot
+		Spring Security / OAuth
+	Libraries
+		Angular JS CLI
+		
+
+2. Architectures:
+	These modules could be similar to something similar to PHP frameworks - Module Design
+
+	Module:		Bootstrapping
+	Module:		Environments
+	Module:		Config
+	Module:		Components
+				> OOP
+				> Inheritance
+				> 
+	Module:		Services
+				> Integrate with external apps: RESTful APIs
+	Module:		Utils
+	Module:		Tests Frameworks
+					Karma - Browser Testing - good
+					Protractor - e2e
+					Jasmine
+					Mocha
+					Lint
+					Chai?
+
+	Config:
+				Platform
+				App Config
+				Module/Lib Config
+					webpack
+				Test Config
+				
+3. Anugular JS Features:
+
+	
+	Auto-reflection: changes
+	
+	Tools:
+		Tasks can be concatenating resources, using CSS preprocessors like LESS or SASS, minification, replacing of values, etc. etc. 
+		The most common tools for managing and running these tasks are called grunt and gulp, which are installed through npm as well.
+	
+###Questions:
+
+1. What about node_modules?
+	> So large size - do we need to have it generated in the real app?
+		The node_modules directory is only for build tools.
+		When you deploy your app, you only distribute the resulting build, not any of the source files or build tools.
+		I tried to delete this directory and project still works - true - because that example app doesn't contain node_modules in the distribution
+
+2. What about ng commands while Jerry knows about npm commands?
+	> Jerry knows more
+	
+3. Why are ng commands residing inside appdata folder?
+	> Weird - To be found out
+	> We install something - like npm, but did I install Angular JS? - it gets there by app build?
+	
+4. Where on earth do ng commands get generated?
+	> Similar to npm? - To be found out
+	> Updates:
+		ng commands are most likely coming from Angular CLI library and installations
+	
+5. 
+
+
+###Angular JS Literature Review / Apps Research
+
+1. Echoes Player - App:
+	First complete Angular JS 2 Example App is working!
+	
+2. 
+
+
+
+###AngularJS POC:
+
+1. Build one POC from scratch
+
+	(1) Starting App:
+		AngularJS-AngularCLIDemoApp
+	(2) Multiple Components:
+		Refer to: echoes-player-master
+	(3) Features Design:
+		> Core:
+			1) Angular JS 2 modules
+			2) CLI module - core - due to ng commands
+		> Module Structures:
+			1) CLI governed
+			2) PHP Module Similarities
+			3) Java Multi-tiered
+		
+
+###Angular JS Projects
+
+1. Angular JS Project 1:
+
+	Installation:	DONE
+	Generating a New Project:	DONE
+		ng serve --host 0.0.0.0 --port 4201 --live-reload-port 49153
+	Generating Components, Directives, Pipes and Services
+		DONE
+	Generating a Route
+		DONE
+	Creating a Build
+		DONE
+	Build Targets and Environment Files
+		DONE
+	Base tag handling in index.html
+	Bundling
+		ng build --prod
+		ng serve --prod
+		DONE
+	Running Unit Tests
+		ng test --watch=false
+		ng test --single-run
+		ng test --code-coverage
+		ng test --lint
+	Running End-to-End Tests
+		ng e2e
+	Proxy To Backend
+		--proxy-config
+		We create a file next to projects package.json called proxy.conf.json with the content
+		{
+		  "/api": {
+		    "target": "http://localhost:3000",
+		    "secure": false
+		  }
+		}
+		"start": "ng serve --proxy-config proxy.conf.json",
+	Deploying the App via GitHub Pages
+		ng github-pages:deploy --message "Optional commit message"
+	Linting code
+		ng lint
+	Commands autocompletion
+		ng completion 1>> ~/.bashrc 2>>&1
+		source ~/.bashrc
+	Project assets
+		"assets": [
+		  "assets",
+		  "favicon.ico"
+		]
+	Global styles
+		The styles.css file allows users to add global styles and supports CSS imports.
+		If the project is created with the --style=sass option, this will be a .sass file instead, and the same applies to scss/less/styl.
+		You can add more global styles via the apps[0].styles property in angular-cli.json.	
+	CSS preprocessor integration
+		Angular-CLI supports all major CSS preprocessors:
+			sass/scss (http://sass-lang.com/)
+			less (http://lesscss.org/)
+			stylus (http://stylus-lang.com/)	
+		styleUrls: ['./app.component.scss']
+		ng new sassy-project --style=sass
+		ng set defaults.styleExt scss
+	3rd Party Library Installation
+		npm install lib-name --save and import it in your code
+		npm install d3 --save
+		npm install @types/d3 --save-dev
+		First, create a typings.d.ts file in your src/ folder. This file will be automatically included as global type definition.
+		Then, in src/typings.d.ts, add the following code:
+			declare module 'typeless-package';
+		Finally, in the component or file that uses the library, add the following code:
+			import * as typelessPackage from 'typeless-package';
+			typelessPackage.method();
+	Global Library Installation
+		npm install bootstrap@next
+		"scripts": [
+		  "../node_modules/jquery/dist/jquery.js",
+		  "../node_modules/tether/dist/js/tether.js",
+		  "../node_modules/bootstrap/dist/js/bootstrap.js"
+		],		
+		"styles": [
+		  "../node_modules/bootstrap/dist/css/bootstrap.css",
+		  "styles.css"
+		],
+		 ng serve
+	Updating angular-cli
+		npm uninstall -g angular-cli
+		npm cache clean
+		npm install -g angular-cli@latest
+		Local:
+			rm -rf node_modules dist # use rmdir on Windows
+			npm install --save-dev angular-cli@latest
+			npm install
+			ng update
+				Running ng update will check for changes in all the auto-generated files created by ng new and allow you to update yours. You are offered four choices for each changed file: y (overwrite), n (don't overwrite), d (show diff between your file and the updated file) and h (help).
+				Carefully read the diffs for each code file, and either accept the changes or incorporate them manually after ng update finishes.
+	Development Hints for hacking on angular-cli
+		git clone https://github.com/angular/angular-cli.git
+		cd angular-cli
+		npm link
+
+		ng new foo
+		cd foo
+		npm link angular-cli
+		ng serve
+
+		> npm link is very similar to npm install -g except that instead of downloading the package from the repo, the just cloned angular-cli/ folder becomes the global package. Any changes to the files in the angular-cli/ folder will immediately affect the global angular-cli package, allowing you to quickly test any changes you make to the cli project.
+		> npm link angular-cli symlinks the global angular-cli package to the local angular-cli package. Now the angular-cli you cloned before is in three places: The folder you cloned it into, npm's folder where it stores global packages and the angular-cli project you just created.
+
+		ng new foo --link-cli
+		
+
+2. How to add various modules and use them:
+
+	MVC
+	Factory
+	Services
+	RESTful APIs
+		Call RevWorkflowBP
+		Call RevWorkflowDataService
+	ng2-logger
+	...
+	
+
+3. UI Design
+
+4. Client APIs: provide client/user UI + APIs
+	
+5. Integration APIs
+
+6. App / Module Designs
