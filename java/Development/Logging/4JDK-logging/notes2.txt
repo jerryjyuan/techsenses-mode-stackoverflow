@@ -1,0 +1,13 @@
+
+
+
+import java.util.logging.Logger;
+import java.util.logging.LogManager;
+
+
+java.util.logging.LogManager;
+Logger	getLogger(String name)
+Method to find a named logger
+
+
+Logger log = LogManager.getLogger("Classname.class");

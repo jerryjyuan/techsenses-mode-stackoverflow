@@ -1,0 +1,293 @@
+
+
+===================================================================================
+===================================================================================
+===================================================================================
+URLs:
+
+http://stackoverflow.com/questions/6442619/launching-gradle-builds-from-eclipse
+http://www.gradle.org/docs/current/userguide/tutorial_java_projects.html
+http://forums.gradle.org/gradle/topics/what_is_the_best_way_to_run_edit_a_gradle_build_from_eclipse
+http://docs.spring.io/sts/docs/2.9.0.old/reference/html/gradle/gradle-sts-tutorial.html
+
+https://github.com/spring-projects/eclipse-integration-gradle/blob/master/README.md
+http://static.springsource.org/sts/docs/latest/reference/html/gradle/installation.html
+
+
+Summary:
+
+(1) Command Line
+	===>Works as expected for Gradle builds
+(2) Gradle plugin for IDE
+	===>Installed a little bit but not yet configured or run it completely
+(3) Manual Configurations - Run as External Configurations:
+	This has been tried ===>Works as expected like what command line does
+	Actually Eclipse/STS can configure any kind of external configurations tools to be run inside IDE
+(4) Custom Luancher
+(5) Enide Gradle Tool
+
+===================================================================================
+http://stackoverflow.com/questions/6442619/launching-gradle-builds-from-eclipse
+
+
+
+Interim work-around more palatable to those with command-line phobia.
+
+From Eclipse, use pulldown menu Run / External Tools / External Tools Configurations...
+
+Select "Program" in left navigator panel 
+	then click the "New launch configuration" button in the tool bar 
+	(first button in my tool bar).
+
+With Main tab selected, fill out the following fields:
+
+Name: (above the tabs) to "Gradle" 
+	(or whatever name you want for the launcher).
+Location: Use "Browse File System..." button 
+	to navigate to your "gradle.bat" or "gradlew.bat" 
+	to run.
+Working Directory: Use "Browse Workspace..." button 
+	to select directory with the "build.gradle" file 
+	for the desired project.
+Arguments: Enter "--gui"
+Add to Arguments: the switch "-b filename.gradle" 
+	if you use a Gradle build file other than 
+	"build.gradle".
+
+After this, your developers can use the Run / External Tools or tool bar button to launch the Gradle Gui. They can do this and close it after each use, or (to avoid startup lag), minimize it when not in use.
+
+===================================================================================
+===================================================================================
+===================================================================================
+Launching Gradle builds from Eclipse
+
+
+(1) Command Line:
+
+This is how I am doing it: github.com/djangofan/WebDriverTestingTemplate –  djangofan Jan 17 '13 at 18:33
+
+The short answer is that we do not invoke gradle scripts from the Eclipse.
+
+I believe this site outlines where this work is at the moment and it does not seem to be much right now.
+
+I am a bit curious what kind of tasks you want to run from Eclipse. Why not run tasks from the command line?
+
+
+Agreed, that plugin seems to be stalled. Our development team is accustomed to invoking various Ant targets (clean, build, deploy, unit test, etc.) from the Eclipse Ant Viewer, and we're aiming for a conceptually seamless transition to Gradle. With development being on Windows machines, there isn't much of a command prompt to speak of... –  csl Jun 23 '11 at 1:17 
+  	 	
+@csl: most of our team develops on windows as well and there is no problem with using gradle in the command prompt. I suggest you place this 'requirement' low. I would hate to see someone not transitioning from ant to gradle for this reason. All these features will be coming one day, if you have a chance, you should make the switch now :) –  c_maker Jun 23 '11 at 1:55
+  	 	
+thanks, will give the command prompt a try. It also looks like the Spring Tool Suite (forum.springsource.org/…) has support for Gradle. –  csl Jun 23 '11 at 2:13 
+7	 	
+Hi, I am the author of the experimental Gradle plugin listed on the link you mentioned. You're right, I've stopped investing time in this eclipse plugin as the springsource sts guys start working on a plugin. the sts 2.7.2 has pretty nice gradle support. the functionality of my plugin is completely available in the sts plugin. but the functionality of the sts gradle plugin goes far beyond. Actually I am joining forces with them to get better Editor support for gradle files. This editor support is based on the new DSLD feature of the groovy-eclipse plugin. –  Rene Groeschke Jun 29 '11 at 20:18
+  	 	
+@Rene: It's good to hear, that the development continues in that project! But does it mean I will have to use STS (which doesn't make much sense for me, as I'm not using Spring), or can I also install this as an Eclipse plugin/feature? –  Chris Lercher Aug 9 '11 at 16:13
+show 2 more comments
+
+
+(2) SpringSource STS team has released a plugin
+
+	https://github.com/spring-projects/eclipse-integration-gradle/blob/master/README.md
+	http://static.springsource.org/sts/docs/latest/reference/html/gradle/installation.html
+
+This is kind of an old post, but the SpringSource STS team has released a plugin: http://static.springsource.org/sts/docs/latest/reference/html/gradle/
+
+Installation instructions can be found here: http://static.springsource.org/sts/docs/latest/reference/html/gradle/installation.html
+
+My experience has been pretty positive with it so far. For straight-up Java projects it works quite well. 
+I am having some issues generating correct war files through Eclipse, while using the Gradle plugin, but gradle itself does it wonderfully. 
+I am relatively new to gradle and the plugin though, so it could be something that I am missing.
+
+
+(3) Spring Gradle Tooling plugin // IDEA:
+
+It is pretty easy to install the Spring Gradle Tooling plugin in Eclipse Juno. 
+Just add the regular Juno software repo site to you install sources, install the "marketplace" app, restart Eclipse, 
+then use the marketplace app to install Gradle and/or Groovy. –  djangofan Apr 7 '13 at 16:29 
+  	 	
+On a side note, I have been using IntelliJ for the last year or so and the Gradle integration is wonderful!! –  Keith P Nov 12 '13 at 14:44
+  	 	
+Personally, I think the "run-as" dialogues for IntelliJ are harder to understand in terms of Gradle. Its hard for me to explain, but I think Eclipse is much easier in that respect. –  djangofan Nov 12 '13 at 19:02
+  	 	
+@djangofan it would be interesting to hear your experience with IntelliJ 13 - with the much improved gradle integration. I can't go back to Eclipse :P –  Keith P Dec 6 '13 at 19:41
+
+
+(4) Manual Configurations - Run as External Configurations: gui scenario
+
+Interim work-around more palatable to those with command-line phobia.
+
+From Eclipse, use pulldown menu Run / External Tools / External Tools Configurations...
+
+Select "Program" in left navigator panel then click the "New launch configuration" button in the tool bar (first button in my tool bar).
+
+With Main tab selected, fill out the following fields:
+
+Name: (above the tabs) to "Gradle" (or whatever name you want for the launcher).
+Location: Use "Browse File System..." button to navigate to your "gradle.bat" or "gradlew.bat" to run.
+Working Directory: Use "Browse Workspace..." button to select directory with the "build.gradle" file for the desired project.
+Arguments: Enter "--gui"
+Add to Arguments: the switch "-b filename.gradle" if you use a Gradle build file other than "build.gradle".
+
+After this, your developers can use the Run / External Tools or tool bar button to launch the Gradle Gui. They can do this and close it after each use, or (to avoid startup lag), minimize it when not in use.
+
+
+(5) Manual Configurations - Run as External Configurations: passing commands instead gui scenario
+
+This is a perfectly acceptable solution as well and the general way to run external tools from Eclipse w/o explicit support. 
+I still don't see what problem the OP has with running commands from a seperate terminal though. It's prolly faster anyway. –  omnisis Dec 28 '11 at 4:48
+  	 	
+agree with omnisis: I don't see this as an "interim workaround" at all. 
+Note that, instead of running in gui mode, you can simply call gradle (or gradlew) passing "build" or "run". 
+You can have any of these run configs display in the External Tools dropdown menu for quick access. –  Hawkeye Parker Aug 26 at 9:49
+
+I know this is an old question, but I still do not think it is possible to have Eclipse run a gradle build for you. 
+The Spring Gradle plugin is a great start, if you use that, you can define an external tool builder to run gradle when you want. 
+If you have lots of projects and all are being built with gradle, you can even have gradle add the capability to your eclipse projects for you. 
+While this can be cleaned up, you can add something like this to your gradle build file:
+
+apply plugin: 'eclipse'
+
+eclipse {
+    project {
+        // Store a copy of the desired Gradle_Builder.launch file in a top-level 'master'
+        //    directory.  Then this code searches for it, and by copying it, 
+        //    adds the launch file to the specifc project that will run gradle
+        String launchFileNameOrig = '.externalToolBuilders/Gradle_Builder.launch'
+        String launchFileName = launchFileNameOrig
+        File launchFile = file(launchFileName)
+        boolean needToCopy = false
+        while (!launchFile.exists()) {
+            launchFileName = '../' + launchFileName
+            launchFile = file(launchFileName)
+            needToCopy = true
+        }
+        if (needToCopy) {
+             copy {
+                from (launchFile)
+                into '.externalToolBuilders'
+            }
+        }
+
+        buildCommand 'org.eclipse.ui.externaltools.ExternalToolBuilder', LaunchConfigHandle: '<project>/'+launchFileNameOrig
+        file {
+            // when they made the "buildCommand" it looks like they left off 'triggers', so parse the XML until
+            // the right place is found, then insert it.
+            withXml {
+                def projectNode = it.asNode()
+                projectNode.iterator().each { subNode ->
+                    String subNodeText = '' + subNode
+                    if (subNodeText.startsWith('buildSpec')) {
+                        subNode.iterator().each { buildCmd ->
+                            String nameNode = buildCmd?.name
+                            if (nameNode.contains('ExternalToolBuilder')) {
+                                buildCmd.appendNode('triggers', 'full')
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+This is the content of the file stored at the top of the directory hierarchy under: ./.externalToolBuilders/Gradle_Builder.launch. 
+As defined here, this will only run after a "clean" 
+[Gradle is more expensive time-wise than the native Java Builder, so continue to use that for auto-building]. 
+Note: the file contents below also assumes that you are using "git" and the gradle wrapper. 
+You see this on the ATTR_LOCATION value. 
+Adjust as needed. One nice thing about this approach though is that you can have the gradle wrapper be any version of gradle you want, 
+and then eclipse will use that version when it runs!
+
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.ui.externaltools.ProgramBuilderLaunchConfigurationType">
+<stringAttribute key="org.eclipse.debug.core.ATTR_REFRESH_SCOPE" value="${workspace}"/>
+<booleanAttribute key="org.eclipse.debug.ui.ATTR_LAUNCH_IN_BACKGROUND" value="false"/>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION" value="${git_dir}/../gradlew"/>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_RUN_BUILD_KINDS" value="full,"/>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_TOOL_ARGUMENTS" value="assemble"/>
+<booleanAttribute key="org.eclipse.ui.externaltools.ATTR_TRIGGERS_CONFIGURED" value="true"/>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_WORKING_DIRECTORY" value="${project_loc}"/>
+</launchConfiguration>
+share|improve this answer
+answered Aug 30 '12 at 11:33
+
+
+(6) Custom Launcher:
+
+You can create a custom launcher from eclipse which would invoke your Gradle build.
+
+You can use the Gradle Eclipse plugin like gradle eclipse to generate an Eclipse project from the gradle project. 
+It adds a lot of targets to the generated Eclipse projects and is highly customizable.
+
+Thanks, but the question was around invoking Gradle from Eclipse - not generating Eclipse projects. –  csl Jun 22 '11 at 19:44
+
+As ever, you are better off with IDEA. Support has been around since 2009 http://blogs.jetbrains.com/idea/2009/08/gradle-support/
+
+and even fuller support is available now via the EAP (free to use!) http://blogs.jetbrains.com/idea/2011/09/keen-to-try-gradle-integration-in-intellij-idea/
+
+
+(7) Enide Gradle
+
+There is also Enide Gradle http://www.nodeclipse.org/projects/gradle
+that can be used with or without Gradle IDE by Pivotal.
+In Gradle, Maven or CDT(C++) project.
+
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================
+===================================================================================

@@ -1,0 +1,84 @@
+
+
+========================================================================================
+LogBack Logging:
+
+
+(1) Jar Dependency:
+
+	Work together with SLF4J
+
+        <!-- logging -->
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <!-- <scope>runtime</scope> -->
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <!-- <scope>runtime</scope> --> <!-- some spring dependencies need to compile against jcl -->
+        </dependency>
+
+
+
+(2) Usage:
+
+
+1) Imports:
+
+	import org.jboss.logging.Logger;
+
+
+2) Declarations and Initializations:
+
+	private static final CoreMessageLogger LOG = Logger.getMessageLogger(CoreMessageLogger.class, SessionImpl.class.getName());
+
+
+3) Invoking:
+
+			   private static final boolean TRACE_ENABLED = LOG.isTraceEnabled();
+
+
+
+				LOG.debug(
+						"Session creation specified 'autoJoinTransactions', which is invalid in conjunction " +
+								"with sharing JDBC connection between sessions; ignoring"
+				);
+
+
+========================================================================================
+logback.xml:
+
+	Appenders:
+		===>Appender 1: STDOUT: configure STDOUT
+	Logger(s): specify various modules to be enabled with logging
+	Root: specify root module
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>web - %date [%thread] %-5level %logger{36} - %message%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <logger name="org.springframework" level="WARN" />
+    <logger name="org.springframework.transaction" level="WARN" />
+
+    <!-- in order to debug some marshalling issues, this needs to be TRACE -->
+    <logger name="org.springframework.web.servlet.mvc" level="WARN" />
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>
+
+========================================================================================

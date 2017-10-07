@@ -1,0 +1,176 @@
+
+
+=======================================================================
+(1) Jars:
+
+Java JDK Util Logging Configurations:
+
+	Add jar:
+
+	No additional jars required
+
+
+(2) Configurations:
+
+	1) Optional Configuration Class:
+		-Djava.util.logging.config.class=<custom-config-class>
+
+		===>Custom configuration file instead of LogManager configuration
+
+	2) Optional Configuration File:
+		-Djava.util.logging.config.file=<custom-config-file>
+	
+		-Djava.util.logging.config.file=C:\workspaces-sts-360\workspace-java-certification\onlinetest-hackerrank\test-demo\demo1\jdk-logging\logging.properties
+
+		===>Custom configurations file
+
+		a) Default: JRE lib/logging.properties
+
+			===>The above custom configurations file will override this JRE default file
+
+		b) There are a variety of Handlers available:
+			ConsoleHandler / FileHandler / ......
+
+			Example:
+				FileHandler:
+				===>The output logging file will be saved in "user.home" location:
+					Such as: C:\Users\jerryjyuan\java0.log
+
+(3) Usage in Classes:
+
+import java.util.logging.Logger;
+import java.util.logging.LogManager;
+import java.util.logging.Level;
+
+	// PRIVATE
+	//This style has no hard-coded literals, and requires the logger
+	//to be "non-static".
+	private final Logger fLogger=Logger.getLogger(this.getClass().getPackage().getName());
+
+	//This style lets the logger be static, but hard-codes a class literal.
+	//private static final Logger fLogger =
+	//  Logger.getLogger(Tests.class.getPackage().getName())
+	//;
+
+	//This style uses a hard-coded literal and should likely be avoided:
+	//private static final Logger fLogger = Logger.getLogger("myapp.business");
+	
+
+
+
+    public void doSomething() {
+        //Log messages, one for each level
+        //The actual logging output depends on the configured
+        //level for this package. Calls to "inapplicable"
+        //messages are inexpensive.
+        fLogger.finest("this is finest");
+        fLogger.finer("this is finer");
+        fLogger.fine("this is fine");
+        fLogger.config("this is config");
+        fLogger.info("this is info");
+        fLogger.warning("this is a warning");
+        fLogger.severe("this is severe");
+
+        //In the above style, the name of the class and
+        //method which has generated a message is placed
+        //in the output on a best-efforts basis only.
+        //To ensure that this information is always
+        //included, use the following "precise log"
+        //style instead :
+        fLogger.logp(Level.INFO, this.getClass().toString(), "doSomething", "blah");
+
+        //For the very common task of logging exceptions, there is a
+        //method which takes a Throwable :
+        Throwable ex = new IllegalArgumentException("Some exception text");
+        fLogger.log(Level.SEVERE, "Some message", ex);
+
+        //There are convenience methods for exiting and
+        //entering a method, which are at Level.FINER :
+        fLogger.exiting(this.getClass().toString(), "doSomething");
+
+        //Display user.home directory, if desired.
+        //(This is the directory where the log files are generated.)
+        //System.out.println("user.home dir: " + System.getProperty("user.home") );
+	}
+
+
+
+(4) Run Command:
+
+>java -Djava.util.logging.config.file=C:\Temp\logging.properties -cp . myapp.business.SimpleLogger
+
+=======================================================================
+References:
+	C:\workspaces-sts-360\workspace-java-certification\onlinetest-hackerrank\test-demo\demo1\jdk-logging
+
+=======================================================================
+Example:
+
+logging.properties:
+
+
+# Properties file which configures the operation of the JDK 
+# logging facility.
+
+# The system will look for this config file, first using 
+# a System property specified at startup: 
+# 
+# >java -Djava.util.logging.config.file=myLoggingConfigFilePath 
+# 
+# If this property is not specified, then the config file is 
+# retrieved from its default location at: 
+# 
+# JDK_HOME/jre/lib/logging.properties
+
+# Global logging properties. 
+# ------------------------------------------ 
+# The set of handlers to be loaded upon startup. 
+# Comma-separated list of class names. 
+# (? LogManager docs say no comma here, but JDK example has comma.) 
+handlers=java.util.logging.FileHandler, java.util.logging.ConsoleHandler
+
+# Default global logging level. 
+# Loggers and Handlers may override this level 
+.level=INFO
+
+# Loggers 
+# ------------------------------------------ 
+# Loggers are usually attached to packages. 
+# Here, the level for each package is specified. 
+# The global level is used by default, so levels 
+# specified here simply act as an override. 
+myapp.ui.level=ALL 
+myapp.business.level=CONFIG 
+myapp.data.level=SEVERE
+
+# Handlers 
+# -----------------------------------------
+
+# --- ConsoleHandler --- 
+# Override of global logging level 
+java.util.logging.ConsoleHandler.level=SEVERE 
+java.util.logging.ConsoleHandler.formatter=java.util.logging.SimpleFormatter
+
+# --- FileHandler --- 
+# Override of global logging level 
+java.util.logging.FileHandler.level=ALL
+
+# Naming style for the output file: 
+# (The output file is placed in the directory 
+# defined by the "user.home" System property.) 
+java.util.logging.FileHandler.pattern=%h/java%u.log
+
+# Limiting size of output file in bytes: 
+java.util.logging.FileHandler.limit=50000
+
+# Number of output files to cycle through, by appending an 
+# integer to the base file name: 
+java.util.logging.FileHandler.count=1
+
+# Style of output (Simple or XML): 
+java.util.logging.FileHandler.formatter=java.util.logging.SimpleFormatter
+
+
+=======================================================================
+
+

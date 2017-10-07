@@ -1,0 +1,297 @@
+
+
+==========================================================
+Gradle:
+
+
+(1) Background:
+	1) Ant -> Maven -> Gradle
+		Why Gradle?
+			===>Advanced and up-to-date build tools
+			===>Winner over maven and ant/ivy
+			===>Many more features - will be having even more due to many more players involved
+	2) Big Players:
+		Spring Framework
+		Hibernate
+
+(2) Features
+
+
+
+(5) IDE:
+
+	1) Eclipse:
+		1) Buildship
+		2) STS Plugin
+		Documents:
+			https://github.com/eclipse/buildship/wiki/Migration-guide-from-STS-Gradle-to-Buildship
+			===>There are two major Gradle plugins for Eclipse: one created by SpringSource as part of the Spring Tool Suite and one called Buildship developed by Gradle Inc. 
+				Since Buildship became an eclipse.org project, the SpringSource developers are planning to phase out their tooling and switch to Buildship.
+			===>Project Task: Migration guide from STS Gradle to Buildship
+				===>In software development term, it is a task assigned to one of the team members of Gradle Buildship team (Eclipse)
+					1) He/she spent several days to test it in various versions, and then add changes to Buildship and some fixes, etc.
+					2) And changes are incorporated into Buildship or plugin
+					3) Document the procedures/...
+					The one single engineer member's work becomes worldwide use/migration procedures
+					===>This was similar from what I learned and worked at Teradata JDBC driver team 
+						- any features or changes / fixes worked on by one single team member became worldwide usage processes
+						- and we as the users, are subject to learn all these expertise - which was just from one single engineer' work
+
+			===>Buildship vs. Gradle STS Plugin:
+				===>Similarity:
+					===>UI Looks
+				===>Differences: "G" colors could be easy differentiators
+					===>Buildship:
+						===>Bright "G"
+						===>Gradle Executions
+							Execution visualization: The Executions view provides a visual overview of the build, the hierarchy of steps and the execution times.
+						===>Gradle Tasks
+						===>Launch:
+							===>Gradle Test
+							===>Run Configurations -> Gradle
+						===>Run: Gradle Builds/Tasks: Gradle distribution/Java Home/Gradle User Home - can all be configured
+						===>Context Menu - different
+					===>Gradle STS Plugin:
+						===>Dismal "G"
+						===>Gradlke Tasks
+						===>Launch:
+							===>Run As: Gradle (STS) Build
+							===>External Tools Configurations -> Gradle Build
+						===>Run: Gradle Builds/Tasks: Have more options in the Run panels
+						===>Context Menu - different
+
+			===>Migration Changes:
+				Methods:
+					1) Import
+						Overwrite/Keep
+						.settings/gradle - delete
+					2) In-Place Editing: probably do the work as well
+						===>YES, the project can be swapped between Buildship and Gradle STS project by modifying: .project + .classpath files
+				Changes: - in case you want to keep plugin configurations:
+					1) .project file:
+						delete the STS Gradle nature definition: <nature>org.springsource.ide.eclipse.gradle.core.nature</nature>
+					2) .classpath file:
+						delete the Gradle classpath container if exists: 
+							<classpathentry exported="true" kind="con" path="org.springsource.ide.eclipse.gradle.classpathcontainer"/>
+						add the Gradle classpath container to all Java project: 
+							<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
+					e.g.:
+					<classpathentry exported="true" kind="con" path="org.springsource.ide.eclipse.gradle.classpathcontainer"/>
+					<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
+				Categories:
+					Buildship:
+						===>Cannot be run via "Gradle STS plugin menus"
+					Gradle STS Plugin Project:
+						===>Cannot be run via "Buildship Run menus"
+				Summaries:
+					===>Should start using Buildship instead of Gradle STS plugin
+					
+	2) STS
+	3) IntelliJ IDEA
+	4) NetBeans
+	...
+
+
+(6) 
+
+==========================================================
+Gradle tasks:
+
+
+(1) Buildship:
+
+Working Directory: /Users/jerryjyuan/Documents/workspace-eclipse-java/GradleProjectTest
+Gradle User Home: /Users/jerryjyuan/.gradle
+Gradle Distribution: Gradle wrapper from target build
+Gradle Version: 2.13
+Java Home: /Library/Java/JavaVirtualMachines/jdk1.8.0_73.jdk/Contents/Home
+JVM Arguments: None
+Program Arguments: None
+Gradle Tasks: test
+
+:compileJava UP-TO-DATE
+:processResources UP-TO-DATE
+:classes UP-TO-DATE
+:compileTestJava UP-TO-DATE
+:processTestResources UP-TO-DATE
+:testClasses UP-TO-DATE
+:test UP-TO-DATE
+
+BUILD SUCCESSFUL
+
+Total time: 0.079 secs
+
+
+
+Gradle:
+	References:
+		https://docs.gradle.org/2.13/userguide/tutorial_java_projects.html
+		https://docs.gradle.org/2.13/userguide/multi_project_builds.html
+	Versions:
+		2.13
+		gradlew - wrapper: the version is included in the wrapper
+	Configurations:
+		1) settings.gradle:
+			===>To define root project name
+			===>To declare projects as part of a multi-project build: "include"
+				include 'shared'
+				include 'api'
+				include 'services:webservice'
+		2) build.gradle:
+			https://dzone.com/articles/apply-external-script-with-plugin-configured-throu
+			===>Main configuration files - also contain other sub-config files - see below
+			===>Imports: import other or external build script files into the main file
+				import from: 'gradle/extra.gradle'
+			===>
+			
+			
+	Tasks:
+		Gradle build script describes one or more Projects. 
+			Each project is made up of different tasks. A task is a piece of work which a build performs. 
+			The task might be compiling some classes, storing class files into separate target folder, creating JAR, generating Javadoc, 
+			or publishing some archives to repositories.
+		init
+		:compileJava UP-TO-DATE
+		:processResources UP-TO-DATE
+		:classes UP-TO-DATE
+		:compileTestJava UP-TO-DATE
+		:processTestResources UP-TO-DATE
+		:testClasses UP-TO-DATE
+		:test UP-TO-DATE
+	Runs:
+		./gradlew clean test
+		./gradlew clean build
+	Builds:
+
+
+Main Configuration Files:
+	===>build.gradle
+		1) plugins
+		2) repositories:
+			===>Use: maven repositories: central
+			===>Use: Ivy repositories - I see these in SAP apps
+			===>Use: file repositories
+		3) Dependencies:
+			===>Similar to Maven - list all dependencies
+			    compile 'org.slf4j:slf4j-api:1.7.21'
+			    testCompile 'junit:junit:4.12'
+		4) Many more configurations
+
+Wrapper:
+	Wrapper scripts + wrapper jars:
+	gradel-wrapper.properties: specify the Gradle version - to be downloaded
+	
+	APP_NAME
+	APP_BASE_HOME
+	Default JVM options
+		JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
+	CLASSPATH=$APP_HOME/gradle/wrapper/gradle-wrapper.jar
+	JAVACMD
+	Split up the JVM_OPTS And GRADLE_OPTS values into an array, following the shell quoting and substitution rules
+	eval splitJvmOpts $DEFAULT_JVM_OPTS $JAVA_OPTS $GRADLE_OPTS
+	JVM_OPTS[${#JVM_OPTS[*]}]="-Dorg.gradle.appname=$APP_BASE_NAME"
+	exec "$JAVACMD" "${JVM_OPTS[@]}" -classpath "$CLASSPATH" org.gradle.wrapper.GradleWrapperMain "$@"
+
+==========================================================
+==========================================================
+==========================================================
+==========================================================
+==========================================================
+==========================================================
+==========================================================
+==========================================================
+Spring build.gradle Example:
+
+1) Repositories + Dependencies
+2) Plugins
+3) Ext
+4) Configure:
+	Specify versions list - similar to maven
+	Specify/apply plugins
+	Import other gradle files:
+		apply from: "${gradleScriptDir}/ide.gradle"
+	Configure special aspects _ fine-tuned configurations
+		sniffer
+		javaApiSignature
+	Specify compile/test-compile options + config
+	Specify compiler/test-compile versions
+	Config - test:
+	Repositories + dependencies
+
+	Add Tasks:
+		Gradle task is equivalent to ANT target.
+		Gradle Phases:
+			Configuration Phase
+			Execution Phase
+		Task:
+			Closures:
+				predicate
+				doFirst
+				doLast
+			Description
+			Adding Dependencies
+		Define:
+			task hello << {
+			   println 'tutorialspoint'
+			}
+			task (hello) << {
+			   println "tutorialspoint"
+			}		
+			task('hello') << {
+			   println "tutorialspoint"
+			}
+			tasks.create(name: 'hello') << {
+			   println "tutorialspoint"
+			}
+		Access:
+			println project.hello.name
+			println tasks['hello'].name
+			println tasks.getByPath('hello').path
+		Execution:
+			gradle –q hello
+	Add Javadoc links
+5) Configure - subprojects
+	jar
+	javadoc
+	tasks
+	artifacts
+6) Projects List
+	Project 1 ...
+	Project 2 ...s
+7) sonarqube {
+	properties {
+		property "sonar.projectName", "Spring Framework"
+		property "sonar.profile", "Spring Framework"
+		property "sonar.jacoco.reportPath", "${buildDir.name}/jacoco.exec"
+		property "sonar.links.homepage", linkHomepage
+		property "sonar.links.ci", linkCi
+		property "sonar.links.issue", linkIssue
+		property "sonar.links.scm", linkScmUrl
+		property "sonar.links.scm_dev", linkScmDevConnection
+		property "sonar.java.coveragePlugin", "jacoco"
+	}
+}
+8) Configure - root project
+	...
+9) Configure - more projects - additional configurations as well
+10) Define some functions
+
+==========================================================
+==========================================================
+==========================================================
+==========================================================
+Maven:
+	===>IDE Support: built-in
+					 plugin
+
+==========================================================
+IDE - Eclipse:
+	External Tools Configurations
+	===>Provide multiple and flexible ways to run many configurations: "External" 
+		- such as not enabled or configured via plugins, etc. - external execution programs can be run as well via this option: such as: "Program"
+	
+==========================================================
+==========================================================
+==========================================================
+==========================================================
+==========================================================
